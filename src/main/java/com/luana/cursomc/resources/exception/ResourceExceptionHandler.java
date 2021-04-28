@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.luana.cursomc.resources.StandartError;
+import com.luana.cursomc.services.exceptions.DateIntegrityException;
 import com.luana.cursomc.services.exceptions.ObjectNotFoundException;
 
 @ControllerAdvice
@@ -15,8 +16,17 @@ public class ResourceExceptionHandler {
 	
 	@ExceptionHandler(ObjectNotFoundException.class)
 	public ResponseEntity<StandartError> objectNotFound(ObjectNotFoundException e, HttpServletRequest request){
+		
 		StandartError err = new StandartError(HttpStatus.NOT_FOUND.value(), e.getMessage(), System.currentTimeMillis());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
+		
+	}
+	
+	@ExceptionHandler(DateIntegrityException.class)
+	public ResponseEntity<StandartError> dateIntegrety(DateIntegrityException e, HttpServletRequest request){
+		
+		StandartError err = new StandartError(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
 		
 	}
 
