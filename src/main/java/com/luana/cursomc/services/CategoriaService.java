@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.luana.cursomc.domain.Categoria;
+import com.luana.cursomc.domain.Cliente;
 import com.luana.cursomc.dto.CategoriaDTO;
 import com.luana.cursomc.repositories.CategoriaRepository;
 import com.luana.cursomc.services.exceptions.DateIntegrityException;
@@ -32,8 +33,9 @@ public class CategoriaService {
 	}
 	
 	public Categoria update(Categoria obj) {
-		find(obj.getId()); //find de cima
-		return repo.save(obj);
+		Categoria newObj = find(obj.getId()); //find de cima
+		updateData(newObj, obj);
+		return repo.save(newObj);
 	}
 	
 	public void delete(Integer id) {
@@ -56,6 +58,10 @@ public class CategoriaService {
 	
 	public Categoria fromDTO(CategoriaDTO objDto) {
 		return new Categoria(objDto.getId(), objDto.getNome());
+	}
+	private void updateData(Categoria newObj, Categoria obj) {
+		
+		newObj.setNome(obj.getNome());
 	}
 }
 
