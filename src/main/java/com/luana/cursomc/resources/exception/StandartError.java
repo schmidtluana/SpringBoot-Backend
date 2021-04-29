@@ -1,4 +1,4 @@
-package com.luana.cursomc.resources;
+package com.luana.cursomc.resources.exception;
 
 import java.io.Serializable;
 
