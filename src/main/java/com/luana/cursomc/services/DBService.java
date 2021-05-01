@@ -20,6 +20,7 @@ import com.luana.cursomc.domain.PagamentoComCartao;
 import com.luana.cursomc.domain.Pedido;
 import com.luana.cursomc.domain.Produto;
 import com.luana.cursomc.domain.enums.EstadoPagamento;
+import com.luana.cursomc.domain.enums.Perfil;
 import com.luana.cursomc.domain.enums.TipoCliente;
 import com.luana.cursomc.repositories.CategoriaRepository;
 import com.luana.cursomc.repositories.CidadeRepository;
@@ -114,16 +115,21 @@ public class DBService {
 		cidadeRepository.saveAll(Arrays.asList(c1,c2,c3));
 		
 		Cliente cli1 = new Cliente(null,"Maria Silva", "maria@gmail.com", "7777777", TipoCliente.PESSSOAFISICA, pe.encode("123")  );
-		
 		cli1.getTelefones().addAll(Arrays.asList("333333","444444"));
+		
+		Cliente cli2 = new Cliente(null,"Ana Beatriz", "ana@gmail.com", "98118739090", TipoCliente.PESSSOAFISICA, pe.encode("123")  );
+		cli2.getTelefones().addAll(Arrays.asList("45678896","45354343"));
+		cli2.addPerfil(Perfil.ADMIN);
 		
 		Endereco en1 = new Endereco(null, "Rua Flores", "300", "Apto 203", "Jardim", "335644", cli1, c1);
 		Endereco en2 = new Endereco(null, "Avenida Matos", "115", "Sala 100", "Centro", "335245", cli1, c2);
-	
+		Endereco en3 = new Endereco(null, "Avenida Floriano", "8915", "Andar 404", "Zona", "67890654", cli2, c2);
+
 		cli1.getEnderecos().addAll(Arrays.asList(en1,en2));
-	
-		clienteRepository.saveAll(Arrays.asList(cli1));
-		enderecoRepository.saveAll(Arrays.asList(en1,en2));
+		cli2.getEnderecos().addAll(Arrays.asList(en3));
+
+		clienteRepository.saveAll(Arrays.asList(cli1,cli2));
+		enderecoRepository.saveAll(Arrays.asList(en1,en2,en3));
 		
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
